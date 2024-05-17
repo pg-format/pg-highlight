@@ -1,1 +1,1 @@
-[ [ ( ErrorTok , ":" ) , ( StringTok , "id" ) ] ]
+[ [ ( ErrorTok , ":" ) , ( NormalTok , "id" ) ] ]

@@ -8,11 +8,11 @@
     , "# unquoted identifier must not start with colon"
     )
   ]
-, [ ( ErrorTok , ":" ) , ( StringTok , "x" ) ]
+, [ ( ErrorTok , ":" ) , ( NormalTok , "x" ) ]
 , []
 , [ ( CommentTok
     , "# unquoted identifier must not start with comma"
     )
   ]
-, [ ( ErrorTok , "," ) , ( StringTok , "x" ) ]
+, [ ( ErrorTok , "," ) , ( NormalTok , "x" ) ]
 ]

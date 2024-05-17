@@ -1,5 +1,5 @@
-[ [ ( StringTok , "a" )
-  , ( AttributeTok , " :x" )
+[ [ ( NormalTok , "a" )
+  , ( DataTypeTok , " :x" )
   , ( NormalTok , " " )
   , ( FunctionTok , "key:" )
   , ( NormalTok , " " )
@@ -27,7 +27,7 @@
 , [ ( NormalTok , "  " )
   , ( DecValTok , "42" )
   , ( OperatorTok , "," )
-  , ( SpecialStringTok , "\"x\"" )
+  , ( StringTok , "\"x\"" )
   , ( OperatorTok , "," )
   , ( DecValTok , "-1.0" )
   ]

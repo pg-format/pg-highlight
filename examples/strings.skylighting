@@ -1,18 +1,18 @@
-[ [ ( StringTok , "\"hello," )
+[ [ ( NormalTok , "\"hello," )
   , ( SpecialCharTok , "\\n" )
-  , ( StringTok , "world\"" )
+  , ( NormalTok , "world\"" )
   ]
-, [ ( StringTok , "'hello," )
+, [ ( NormalTok , "'hello," )
   , ( SpecialCharTok , "\\u000A" )
-  , ( StringTok , "world'" )
+  , ( NormalTok , "world'" )
   ]
-, [ ( StringTok , "\"hello," ) ]
-, [ ( StringTok , "world\"" ) ]
+, [ ( NormalTok , "\"hello," ) ]
+, [ ( NormalTok , "world\"" ) ]
 , [ ( CommentTok , "# invalid" ) ]
-, [ ( StringTok , "\"h" )
+, [ ( NormalTok , "\"h" )
   , ( ErrorTok , "\\e" )
-  , ( StringTok , "llo" )
+  , ( NormalTok , "llo" )
   , ( ErrorTok , "\\u21" )
-  , ( StringTok , "\"" )
+  , ( NormalTok , "\"" )
   ]
 ]
