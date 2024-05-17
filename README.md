@@ -15,7 +15,10 @@ This repository contains syntax definition files for several syntax highlighting
 
 ## Usage
 
-For Kate and Pandoc use KSyntaxHighlighting syntax definition file [pg.xml](pg.xml).
+For Kate and KDE applications copy file [pg.xml](pg.xml) to [your location of KDE syntax definition files](https://api.kde.org/frameworks/syntax-highlighting/html/#autotoc_md4).
+
+For Pandoc and Quarto copy file [pg.xml](pg.xml) and reference it [via option
+`syntax-definition`](https://pandoc.org/MANUAL.html#option--syntax-definition).
 
 ## Development
 
