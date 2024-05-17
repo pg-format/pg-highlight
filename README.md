@@ -1,6 +1,8 @@
 # PG highlight
 
-> Syntax highlighting definition for [PG format](https://pg-format.github.io/specification/#pg-format).
+> Syntax highlighting definitions for [PG format](https://pg-format.github.io/specification/#pg-format).
+
+This repository contains syntax definition files for several syntax highlighting engines.
 
 ## Overview
 
@@ -19,6 +21,8 @@ For Kate and Pandoc use KSyntaxHighlighting syntax definition file [pg.xml](pg.x
 
 ### KSyntaxHighlighting
 
+KSyntaxHighlighting is used by Kate, KWrite, KDevelop, and other KDE applications and by Pandoc and Quarto.
+
 The [syntax definition file](pg.xml) is tested with two independent implementations:
 
 - kate-syntax-highlighting (install with `sudo apt install libkf5syntaxhighlighting-tools`)
@@ -36,5 +40,15 @@ Use option `--syntax-trace` with `katelight` to display additional information, 
 
 ### CodeMirror
 
-To be done.
+Planned. See <https://github.com/pg-format/pg-formatter> for a first version.
+
+### Other engines
+
+- Pygments used by Jupyter Notebooks
+- Highlight.js
+- Prism
+- GeSHi (Generic Syntax Highlighter) used by MediaWiki
+- TextMate grammar files used by GitHub
+- Rouge used by GitLab
+- Language Server Protocol (LSP)
 
