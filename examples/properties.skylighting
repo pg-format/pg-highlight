@@ -1,5 +1,5 @@
-[ [ ( NormalTok , "a" )
-  , ( DataTypeTok , " :label" )
+[ [ ( NormalTok , "a " )
+  , ( DataTypeTok , ":label" )
   , ( NormalTok , " " )
   , ( FunctionTok , "key:" )
   , ( KeywordTok , "true" )
@@ -13,8 +13,8 @@
   , ( NormalTok , " " )
   , ( DecValTok , "1" )
   ]
-, [ ( NormalTok , "b" )
-  , ( DataTypeTok , " :label" )
+, [ ( NormalTok , "b " )
+  , ( DataTypeTok , ":label" )
   , ( NormalTok , " " )
   , ( FunctionTok , "key:" )
   , ( KeywordTok , "true" )

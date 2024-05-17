@@ -3,7 +3,9 @@ set -euo pipefail
 
 # requires
 # - skylighting
-# - kate-syntax-highlighter (install with Debian package libkf5syntaxhighlighting-tools)
+# - kate-syntax-highlighter
+
+echo '<html><body style="background-color:#ffffff;color:#1f1c1b">' > kate.html
 
 for pg in examples/*.pg; do
   expect=${pg%.pg}.skylighting
@@ -11,7 +13,7 @@ for pg in examples/*.pg; do
 
   if [[ -f "$expect" ]]; then
     tmp=${pg%.pg}.tmp
-    skylighting -d pg.xml -s pg -f native "$pg" 2>/dev/null > "$tmp"
+    ./skylight -f native "$pg" 2>/dev/null > "$tmp"
     # kate-syntax-highlighter -f ansi "$pg" > "$ansi"
 
     if  cmp -s "$tmp" "$expect" ; then
@@ -19,10 +21,15 @@ for pg in examples/*.pg; do
       rm "$tmp"
     else
       echo "$pg - highlighting not as expected"
-      diff $tmp $expect
+      diff $tmp $expect || true
     fi
   else
     echo "$pg - created $expect"
-    skylighting -d pg.xml -s pg -f native "$pg" 2>/dev/null > "$expect"
+    ./skylight -f native "$pg" 2>/dev/null > "$expect"
   fi
+
+  echo "<b>$pg</b>" >> kate.html
+  echo "</pre>" >> kate.html
+  ./katelight -f html "$pg" | grep -oPz '<pre>((?s).+)</pre>' >> kate.html
 done
+

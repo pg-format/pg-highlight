@@ -1,2 +1,2 @@
 #!/usr/bin/bash
-kate-syntax-highlighter -f ansi $@
+kate-syntax-highlighter -s pg -f ansi $@

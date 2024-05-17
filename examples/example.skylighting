@@ -1,9 +1,14 @@
-[ [ ( NormalTok , "id" )
-  , ( DataTypeTok , " :label" )
+[ [ ( NormalTok , "id " )
+  , ( DataTypeTok , ":label" )
   , ( NormalTok , " " )
   , ( FunctionTok , "key:" )
   , ( StringTok , "value" )
   ]
-, [ ( NormalTok , "42" ) , ( DataTypeTok , " :answer" ) ]
+, [ ( NormalTok , "42 " ) , ( DataTypeTok , ":answer" ) ]
 , [ ( NormalTok , "\"node id with spaces\"" ) ]
+, []
+, [ ( NormalTok , "a " )
+  , ( ControlFlowTok , "->" )
+  , ( NormalTok , " b" )
+  ]
 ]

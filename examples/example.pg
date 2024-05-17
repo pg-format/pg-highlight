@@ -1,3 +1,5 @@
 id :label key:value
 42 :answer
 "node id with spaces"
+
+a -> b

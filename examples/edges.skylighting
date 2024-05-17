@@ -1,0 +1,20 @@
+[ [ ( NormalTok , "a " )
+  , ( ControlFlowTok , "->" )
+  , ( NormalTok , " b" )
+  ]
+, [ ( NormalTok , "a " )
+  , ( ControlFlowTok , "--" )
+  , ( NormalTok , " b " )
+  , ( DataTypeTok , ":label" )
+  ]
+, [ ( NormalTok , "x: a " )
+  , ( ControlFlowTok , "->" )
+  , ( NormalTok , " b" )
+  ]
+, [ ( NormalTok , "x: a " )
+  , ( ControlFlowTok , "->" )
+  , ( NormalTok , " b " )
+  , ( FunctionTok , "key:" )
+  , ( StringTok , "value" )
+  ]
+]

@@ -1,0 +1,4 @@
+a -> b
+a -- b :label
+x: a -> b
+x: a -> b key:value

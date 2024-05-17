@@ -1,34 +1,34 @@
-[ [ ( NormalTok , "a" )
-  , ( DataTypeTok , " :x" )
+[ [ ( NormalTok , "a " )
+  , ( DataTypeTok , ":x" )
   , ( NormalTok , " " )
   , ( FunctionTok , "key:" )
   , ( NormalTok , " " )
   , ( DecValTok , "1" )
   , ( NormalTok , " " )
-  , ( OperatorTok , "," )
+  , ( ControlFlowTok , "," )
   , ( NormalTok , " " )
   , ( DecValTok , "2" )
   , ( NormalTok , " " )
-  , ( OperatorTok , "," )
+  , ( ControlFlowTok , "," )
   , ( NormalTok , " " )
   , ( CommentTok , "# comment" )
   ]
 , [ ( NormalTok , "  " )
   , ( KeywordTok , "true" )
-  , ( OperatorTok , "," )
+  , ( ControlFlowTok , "," )
   , ( NormalTok , " " )
   , ( KeywordTok , "false" )
   , ( NormalTok , " " )
-  , ( OperatorTok , "," )
+  , ( ControlFlowTok , "," )
   ]
 , []
 , [ ( CommentTok , "# empty line" ) ]
 , []
 , [ ( NormalTok , "  " )
   , ( DecValTok , "42" )
-  , ( OperatorTok , "," )
+  , ( ControlFlowTok , "," )
   , ( StringTok , "\"x\"" )
-  , ( OperatorTok , "," )
+  , ( ControlFlowTok , "," )
   , ( DecValTok , "-1.0" )
   ]
 , []

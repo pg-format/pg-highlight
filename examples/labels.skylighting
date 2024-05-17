@@ -1,9 +1,15 @@
-[ [ ( NormalTok , "a" )
-  , ( DataTypeTok , " :b : c :\"1" )
+[ [ ( NormalTok , "a " )
+  , ( DataTypeTok , ":b" )
+  , ( NormalTok , " " )
+  , ( DataTypeTok , ": c" )
+  , ( NormalTok , " " )
+  , ( DataTypeTok , ":\"1" )
   , ( SpecialCharTok , "\\n" )
   , ( ErrorTok , "\\x" )
-  , ( DataTypeTok , "2\" :'d'" )
+  , ( DataTypeTok , "2\"" )
+  , ( NormalTok , " " )
+  , ( DataTypeTok , ":'d'" )
   ]
-, [ ( DataTypeTok , "  : \"e" ) ]
+, [ ( NormalTok , "  " ) , ( DataTypeTok , ": \"e" ) ]
 , [ ( DataTypeTok , "e\"" ) ]
 ]
