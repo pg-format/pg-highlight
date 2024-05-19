@@ -1,0 +1,62 @@
+<indentfold># PG Format highlighting unit test for KDE Syntax highlighting engine
+
+# Unquoted identifier
+abc
+~2
+木
+dc:title
+http://example.org/?a=-&c=0#x
+-':
+a--b
+
+# quoted identifiers
+"hello,\nworld"
+'hello,\u000Aworld'
+"hello,
+world"
+"" # invalid PG format but ok for highlighting
+
+# Invalid string escape sequences
+"h\ello\u21"
+
+# Invalid unquoted identifier
+:id
+a->b
+
+# Nodes with labels and/or properties
+node n: 1,-1,2e+3          # numbers 
+     b: true, false        # boolean values       
+     s: hello,"true",""    # strings
+
+# Edges
+a -> b
+a -- b key:value
+1: a -> b :follows since:2024
+"x": a -> b :follows since:2024
+
+# Line folding
+node
+  :label
+
+  # 
+
+  key:
+
+  value
+
+ ,
+  42
+
+
+a
+  -> #
+
+  b
+
+  key:value
+
+# Invalid statement
+1 : a -> b
+
+# edge with quoted identifiers and value
+"a": "b" -> "c" :"d" "e": "f"

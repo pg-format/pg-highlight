@@ -1,0 +1,3 @@
+[submodule "kate/syntax-highlighting"]
+	path = kate/syntax-highlighting
+	url = git@github.com:pg-format/syntax-highlighting.git

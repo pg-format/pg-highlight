@@ -1,0 +1,9 @@
+#!/usr/bin/bash
+
+# use locally built executable, if available
+bin=syntax-highlighting/build/bin/kate-syntax-highlighter
+
+# otherwise, use globally installed
+[ -f "$bin" ] || bin=kate-syntax-highlighter
+
+$bin -s pg $@

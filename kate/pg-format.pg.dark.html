@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>pg-format.pg</title>
+<meta name="generator" content="KF5::SyntaxHighlighting - Definition (PG format) - Theme (Breeze Dark)"/>
+</head><body style="background-color:#232629;color:#cfcfc2"><pre>
+<span style="color:#7a7c7d;"># PG Format highlighting unit test for KDE Syntax highlighting engine</span>
+
+<span style="color:#7a7c7d;"># Unquoted identifier</span>
+abc
+~2
+木
+dc:title
+http://example.org/?a=-&amp;c=0#x
+-':
+a--b
+
+<span style="color:#7a7c7d;"># quoted identifiers</span>
+&quot;hello,<span style="color:#3daee9;">\n</span>world&quot;
+'hello,<span style="color:#3daee9;">\u000A</span>world'
+&quot;hello,
+world&quot;
+&quot;&quot; <span style="color:#7a7c7d;"># invalid PG format but ok for highlighting</span>
+
+<span style="color:#7a7c7d;"># Invalid string escape sequences</span>
+&quot;h<span style="color:#da4453;text-decoration:underline;">\e</span>llo<span style="color:#da4453;text-decoration:underline;">\u21</span>&quot;
+
+<span style="color:#7a7c7d;"># Invalid unquoted identifier</span>
+<span style="color:#da4453;text-decoration:underline;">:</span>id
+a-<span style="color:#da4453;text-decoration:underline;">&gt;b</span>
+
+<span style="color:#7a7c7d;"># Nodes with labels and/or properties</span>
+node <span style="color:#8e44ad;">n:</span> <span style="color:#f67400;">1</span><span style="color:#fdbc4b;font-weight:bold;">,</span><span style="color:#f67400;">-1</span><span style="color:#fdbc4b;font-weight:bold;">,</span><span style="color:#f67400;">2e+3</span>          <span style="color:#7a7c7d;"># numbers </span>
+     <span style="color:#8e44ad;">b:</span> <span style="font-weight:bold;">true</span><span style="color:#fdbc4b;font-weight:bold;">,</span> <span style="font-weight:bold;">false</span>        <span style="color:#7a7c7d;"># boolean values       </span>
+     <span style="color:#8e44ad;">s:</span> <span style="color:#f44f4f;">hello</span><span style="color:#fdbc4b;font-weight:bold;">,</span><span style="color:#f44f4f;">&quot;true&quot;</span><span style="color:#fdbc4b;font-weight:bold;">,</span><span style="color:#f44f4f;">&quot;&quot;</span>    <span style="color:#7a7c7d;"># strings</span>
+
+<span style="color:#7a7c7d;"># Edges</span>
+a <span style="color:#fdbc4b;font-weight:bold;">-&gt;</span> b
+a <span style="color:#fdbc4b;font-weight:bold;">--</span> b <span style="color:#8e44ad;">key:</span><span style="color:#f44f4f;">value</span>
+1: a <span style="color:#fdbc4b;font-weight:bold;">-&gt;</span> b <span style="color:#2980b9;">:follows</span> <span style="color:#8e44ad;">since:</span><span style="color:#f67400;">2024</span>
+&quot;x&quot;: a <span style="color:#fdbc4b;font-weight:bold;">-&gt;</span> b <span style="color:#2980b9;">:follows</span> <span style="color:#8e44ad;">since:</span><span style="color:#f67400;">2024</span>
+
+<span style="color:#7a7c7d;"># Line folding</span>
+node
+  <span style="color:#2980b9;">:label</span>
+
+<span style="color:#7a7c7d;">  # </span>
+
+  <span style="color:#8e44ad;">key:</span>
+
+  <span style="color:#f44f4f;">value</span>
+
+ <span style="color:#fdbc4b;font-weight:bold;">,</span>
+  <span style="color:#f67400;">42</span>
+
+
+a
+  <span style="color:#fdbc4b;font-weight:bold;">-&gt;</span> <span style="color:#7a7c7d;">#</span>
+
+  b
+
+  <span style="color:#8e44ad;">key:</span><span style="color:#f44f4f;">value</span>
+
+<span style="color:#7a7c7d;"># Invalid statement</span>
+1 <span style="color:#2980b9;">: a</span> <span style="color:#da4453;text-decoration:underline;">-&gt;</span> <span style="color:#da4453;text-decoration:underline;">b</span>
+
+<span style="color:#7a7c7d;"># edge with quoted identifiers and value</span>
+&quot;a&quot;: &quot;b&quot; <span style="color:#fdbc4b;font-weight:bold;">-&gt;</span> &quot;c&quot; <span style="color:#2980b9;">:&quot;d&quot;</span> <span style="color:#8e44ad;">&quot;e&quot;:</span> <span style="color:#f44f4f;">&quot;f&quot;</span>
+</pre></body></html>

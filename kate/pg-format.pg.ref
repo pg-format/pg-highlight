@@ -1,0 +1,62 @@
+<Comment># PG Format highlighting unit test for KDE Syntax highlighting engine</Comment><br/>
+<Space></Space><br/>
+<Comment># Unquoted identifier</Comment><br/>
+<Identifier>abc</Identifier><br/>
+<Identifier>~2</Identifier><br/>
+<Identifier>木</Identifier><br/>
+<Identifier>dc:title</Identifier><br/>
+<Identifier>http://example.org/?a=-&c=0#x</Identifier><br/>
+<Identifier>-':</Identifier><br/>
+<Identifier>a--b</Identifier><br/>
+<Error></Error><br/>
+<Comment># quoted identifiers</Comment><br/>
+<Identifier>"hello,</Identifier><EscapeSequence>\n</EscapeSequence><Identifier>world"</Identifier><br/>
+<Identifier>'hello,</Identifier><EscapeSequence>\u000A</EscapeSequence><Identifier>world'</Identifier><br/>
+<Identifier>"hello,</Identifier><br/>
+<Identifier>world"</Identifier><br/>
+<Identifier>""</Identifier><Space> </Space><Comment># invalid PG format but ok for highlighting</Comment><br/>
+<Error></Error><br/>
+<Comment># Invalid string escape sequences</Comment><br/>
+<Identifier>"h</Identifier><Error>\e</Error><Identifier>llo</Identifier><Error>\u21</Error><Identifier>"</Identifier><br/>
+<Error></Error><br/>
+<Comment># Invalid unquoted identifier</Comment><br/>
+<Error>:</Error><Identifier>id</Identifier><br/>
+<Identifier>a-</Identifier><Error>>b</Error><br/>
+<Error></Error><br/>
+<Comment># Nodes with labels and/or properties</Comment><br/>
+<Identifier>node</Identifier><Space> </Space><PropertyKey>n:</PropertyKey><Space> </Space><Number>1</Number><Comma>,</Comma><Number>-1</Number><Comma>,</Comma><Number>2e+3</Number><Space>          </Space><Comment># numbers </Comment><br/>
+<Space>     </Space><PropertyKey>b:</PropertyKey><Space> </Space><Boolean>true</Boolean><Comma>,</Comma><Space> </Space><Boolean>false</Boolean><Space>        </Space><Comment># boolean values       </Comment><br/>
+<Space>     </Space><PropertyKey>s:</PropertyKey><Space> </Space><UnquotedValue>hello</UnquotedValue><Comma>,</Comma><Value>"true"</Value><Comma>,</Comma><Value>""</Value><Space>    </Space><Comment># strings</Comment><br/>
+<Error></Error><br/>
+<Comment># Edges</Comment><br/>
+<Identifier>a</Identifier><Space> </Space><Direction>-></Direction><Space> </Space><Identifier>b</Identifier><br/>
+<Identifier>a</Identifier><Space> </Space><Direction>--</Direction><Space> </Space><Identifier>b</Identifier><Space> </Space><PropertyKey>key:</PropertyKey><UnquotedValue>value</UnquotedValue><br/>
+<Identifier>1:</Identifier><Space> </Space><Identifier>a</Identifier><Space> </Space><Direction>-></Direction><Space> </Space><Identifier>b</Identifier><Space> </Space><Label>:follows</Label><Space> </Space><PropertyKey>since:</PropertyKey><Number>2024</Number><br/>
+<Identifier>"x":</Identifier><Space> </Space><Identifier>a</Identifier><Space> </Space><Direction>-></Direction><Space> </Space><Identifier>b</Identifier><Space> </Space><Label>:follows</Label><Space> </Space><PropertyKey>since:</PropertyKey><Number>2024</Number><br/>
+<Error></Error><br/>
+<Comment># Line folding</Comment><br/>
+<Identifier>node</Identifier><br/>
+<Space>  </Space><Label>:label</Label><br/>
+<Error></Error><br/>
+<Comment>  # </Comment><br/>
+<Error></Error><br/>
+<Space>  </Space><PropertyKey>key:</PropertyKey><br/>
+<Space></Space><br/>
+<Space>  </Space><UnquotedValue>value</UnquotedValue><br/>
+<Error></Error><br/>
+<Space> </Space><Comma>,</Comma><br/>
+<Space>  </Space><Number>42</Number><br/>
+<Error></Error><br/>
+<Error></Error><br/>
+<Identifier>a</Identifier><br/>
+<Space>  </Space><Direction>-></Direction><Space> </Space><Comment>#</Comment><br/>
+<Error></Error><br/>
+<Space>  </Space><Identifier>b</Identifier><br/>
+<Error></Error><br/>
+<Space>  </Space><PropertyKey>key:</PropertyKey><UnquotedValue>value</UnquotedValue><br/>
+<Error></Error><br/>
+<Comment># Invalid statement</Comment><br/>
+<Identifier>1</Identifier><Space> </Space><Label>: a</Label><Space> </Space><Error>-></Error><Space> </Space><Error>b</Error><br/>
+<Error></Error><br/>
+<Comment># edge with quoted identifiers and value</Comment><br/>
+<Identifier>"a":</Identifier><Space> </Space><Identifier>"b"</Identifier><Space> </Space><Direction>-></Direction><Space> </Space><Identifier>"c"</Identifier><Space> </Space><Label>:"d"</Label><Space> </Space><PropertyKey>"e":</PropertyKey><Space> </Space><Value>"f"</Value><br/>

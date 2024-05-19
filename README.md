@@ -4,42 +4,31 @@
 
 This repository contains syntax definition files for several syntax highlighting engines.
 
-## Overview
+## Installation and Usage
 
-- `pg.xml` [Kate syntax highlighting file](https://api.kde.org/frameworks/syntax-highlighting/html/) of PG format
-- `examples` Unit tests PG format files and corresponding syntax highlighting
+For **Kate** and KDE applications copy or symlink file [kate/pg.xml](kate/pg.xml) to [your location of KDE syntax definition files](https://api.kde.org/frameworks/syntax-highlighting/html/#autotoc_md4) (e.g. `$HOME/.local/share/org.kde.syntax-highlighting/syntax/`).
 
-- `test.sh` Script to run unit tests with [skylighting](https://github.com/jgm/skylighting) 
-- `skylight` Script to highlight with [skylighting](https://github.com/jgm/skylighting) 
-- `katelight` Script to highlight with [kate-syntax-highlighting](https://github.com/KDE/syntax-highlighting)
-
-## Usage
-
-For Kate and KDE applications copy file [pg.xml](pg.xml) to [your location of KDE syntax definition files](https://api.kde.org/frameworks/syntax-highlighting/html/#autotoc_md4).
-
-For Pandoc and Quarto copy file [pg.xml](pg.xml) and reference it [via option
-`syntax-definition`](https://pandoc.org/MANUAL.html#option--syntax-definition).
+For **Pandoc** and **Quarto** reference a local copy of the file [via option `syntax-definition`](https://pandoc.org/MANUAL.html#option--syntax-definition).
 
 ## Development
 
-### KSyntaxHighlighting
+Directory `examples` contains unit tests PG format files and corresponding syntax highlighting.
 
-KSyntaxHighlighting is used by Kate, KWrite, KDevelop, and other KDE applications and by Pandoc and Quarto.
+### Kate syntax definition file
 
-The [syntax definition file](pg.xml) is tested with two independent implementations:
+The Kate Syntax Highlighting Engine ([KSyntaxHighlighting](https://invent.kde.org/frameworks/syntax-highlighting))
+written in C++ is used by Kate, KDevelop, and other KDE applications. Its syntax definition file format is also
+used by the [skylighting](https://github.com/jgm/skylighting) engine written in Hasekll and used by Pandoc and Quarto.
 
-- kate-syntax-highlighting (install with `sudo apt install libkf5syntaxhighlighting-tools`)
-- [skylighting](https://github.com/jgm/skylighting)
+Directory [kate](kate) contains:
 
-To validate the syntax definition file, install `xmllint` and run `make valid`.
- 
-Symlink your `pg.xml` from [your location of syntax definition files](https://api.kde.org/frameworks/syntax-highlighting/html/#autotoc_md4), e.g from `$HOME/.local/share/org.kde.syntax-highlighting/syntax/pg.xml`.
-
-Use option `--syntax-trace` with `katelight` to display additional information, e.g.
-
-~~~sh
-./katelight --syntax-trace=format examples/style.pg 
-~~~
+- PG format syntax definition file [kate/pg.xml](pg.xml)
+- Makefile to validate and test syntax definition (requires `xmllint`)
+- Unit test file `pg-format.pg`
+- `test.sh` Script to run unit tests with [skylighting](https://github.com/jgm/skylighting) 
+- `skylight` Script to highlight with [skylighting](https://github.com/jgm/skylighting) 
+- `highlight` Script to highlight with [kate-syntax-highlighting](https://github.com/KDE/syntax-highlighting)
+  Use option `--syntax-trace` with `katelight` to display additional information, e.g.
 
 ### CodeMirror
 

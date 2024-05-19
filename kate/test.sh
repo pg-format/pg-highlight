@@ -7,14 +7,14 @@ set -euo pipefail
 
 echo '<html><body style="background-color:#ffffff;color:#1f1c1b">' > kate.html
 
-for pg in examples/*.pg; do
+for pg in ../examples/*.pg; do
   expect=${pg%.pg}.skylighting
   ansi=${pg%.pg}.ansi
 
   if [[ -f "$expect" ]]; then
     tmp=${pg%.pg}.tmp
     ./skylight -f native "$pg" 2>/dev/null > "$tmp"
-    # kate-syntax-highlighter -f ansi "$pg" > "$ansi"
+    # ./highlight -f ansi "$pg" > "$ansi"
 
     if  cmp -s "$tmp" "$expect" ; then
       echo "$pg - OK"
@@ -30,6 +30,6 @@ for pg in examples/*.pg; do
 
   echo "<b>$pg</b>" >> kate.html
   echo "</pre>" >> kate.html
-  ./katelight -f html "$pg" | grep -oPz '<pre>((?s).+)</pre>' >> kate.html
+  ./highlight -f html "$pg" | grep -oPz '<pre>((?s).+)</pre>' >> kate.html
 done
 
