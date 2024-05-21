@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Quickstart Example 1</title>
+  <style>
+    #editor {
+        height: 500px;
+        width: 70%;
+    }
+    .cm-editor {
+        height: 100%;
+        width: 100%;
+    }
+  </style>
+</head>
+<body>
+   <div id="editor"></div>
+   <pre id="code" style="display:none">
+some ("value")
+  </pre>
+  <script src="./cm6.bundle.js"></script>
+  <script>
+    const code = document.getElementById("code").textContent
+    const view = cm6.createEditor(code, document.getElementById("editor"))
+  </script>
+</body>

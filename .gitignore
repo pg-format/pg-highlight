@@ -1,2 +1,4 @@
 *.tmp
 kate.html
+
+node_modules
