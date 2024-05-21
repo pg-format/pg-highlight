@@ -2,11 +2,11 @@
 <Space></Space><br/>
 <Comment># Unquoted identifier</Comment><br/>
 <Identifier>abc</Identifier><br/>
-<Identifier>~2</Identifier><br/>
+<Identifier>42</Identifier><br/>
 <Identifier>木</Identifier><br/>
 <Identifier>dc:title</Identifier><br/>
 <Identifier>http://example.org/?a=-&c=0#x</Identifier><br/>
-<Identifier>-':</Identifier><br/>
+<Identifier>~',-:</Identifier><br/>
 <Identifier>a--b</Identifier><br/>
 <Error></Error><br/>
 <Comment># quoted identifiers</Comment><br/>

@@ -2,11 +2,11 @@
 
 # Unquoted identifier
 abc
-~2
+42
 木
 dc:title
 http://example.org/?a=-&c=0#x
--':
+~',-:
 a--b
 
 # quoted identifiers

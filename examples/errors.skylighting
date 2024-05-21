@@ -15,4 +15,10 @@
     )
   ]
 , [ ( ErrorTok , "," ) , ( NormalTok , "x" ) ]
+, []
+, [ ( CommentTok
+    , "# unquoted identifier must not start with minus"
+    )
+  ]
+, [ ( ErrorTok , "-" ) , ( NormalTok , "1" ) ]
 ]

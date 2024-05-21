@@ -5,7 +5,7 @@
   <!ENTITY trailingSpace "&space;*(?:#.*)?$">
   <!ENTITY ignoredLine "^&trailingSpace;$">
   <!ENTITY reserved "\x00-\x20&lt;&gt;&quot;{}\\^`|">
-  <!ENTITY unquotedStart "[^&reserved;#:',]">
+  <!ENTITY unquotedStart "[^&reserved;#:',-]">
   <!ENTITY unquoted "&unquotedStart;[^&reserved;]*">
   <!ENTITY idStart "&unquotedStart;|&quot;|&apos;">
   <!ENTITY escapeSequence "\\(?:[&quot;'\\/bfnrt]|u[0-9a-fA-f]{4})">

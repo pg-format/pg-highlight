@@ -6,3 +6,6 @@
 
 # unquoted identifier must not start with comma
 ,x
+
+# unquoted identifier must not start with minus
+-1
