@@ -1,0 +1,23 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8"/>
+  <title>PG format syntax highlighting with CodeMirror 5</title>
+  <link rel="stylesheet" href="codemirror.css">
+  <script src="codemirror.js"></script>
+  <script src="runmode.js"></script>
+  <script src="simple.js"></script>
+  <script src="pg.js"></script>
+</body>
+<body>
+  <h1>PG format syntax highlighting with CodeMirror 5</h1>
+  <pre id="output" class="cm-s-default"></pre>
+  <script>
+  fetch("pg-format.pg").then(res => res.text())
+      .then(pg => {
+        //pg = ` a` 
+        const element = document.getElementById("output") 
+        CodeMirror(element, { value: pg, mode: "pg" })
+        //CodeMirror.runMode(pg,"pg",element)
+      })
+  </script>
+</body>

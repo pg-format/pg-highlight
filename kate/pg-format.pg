@@ -23,7 +23,11 @@ world"
 :id
 a->b
 
-# Nodes with labels and/or properties
+# Labels
+node :a# #
+  :"c" :b 
+
+# Nodes with properties
 node n: 1,-1,2e+3          # numbers 
      b: true, false        # boolean values       
      s: hello,"true",""    # strings

@@ -23,7 +23,11 @@
 <Error>:</Error><Identifier>id</Identifier><br/>
 <Identifier>a-</Identifier><Error>>b</Error><br/>
 <Error></Error><br/>
-<Comment># Nodes with labels and/or properties</Comment><br/>
+<Comment># Labels</Comment><br/>
+<Identifier>node</Identifier><Space> </Space><Label>:a#</Label><Space> </Space><Comment>#</Comment><br/>
+<Space>  </Space><Label>:"c"</Label><Space> </Space><Label>:b</Label><Space> </Space><br/>
+<Error></Error><br/>
+<Comment># Nodes with properties</Comment><br/>
 <Identifier>node</Identifier><Space> </Space><PropertyKey>n:</PropertyKey><Space> </Space><Number>1</Number><Comma>,</Comma><Number>-1</Number><Comma>,</Comma><Number>2e+3</Number><Space>          </Space><Comment># numbers </Comment><br/>
 <Space>     </Space><PropertyKey>b:</PropertyKey><Space> </Space><Boolean>true</Boolean><Comma>,</Comma><Space> </Space><Boolean>false</Boolean><Space>        </Space><Comment># boolean values       </Comment><br/>
 <Space>     </Space><PropertyKey>s:</PropertyKey><Space> </Space><UnquotedValue>hello</UnquotedValue><Comma>,</Comma><Value>"true"</Value><Comma>,</Comma><Value>""</Value><Space>    </Space><Comment># strings</Comment><br/>
