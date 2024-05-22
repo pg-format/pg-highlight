@@ -30,6 +30,10 @@ Directory [kate](kate) contains:
 - `highlight` Script to highlight with [kate-syntax-highlighting](https://github.com/KDE/syntax-highlighting)
   Use option `--syntax-trace` with `katelight` to display additional information, e.g.
 
+### TextMade / Ace
+
+TextMate grammar files are also used by Ace editor, also used by GitHub.
+
 ### CodeMirror
 
 Planned. See <https://github.com/pg-format/pg-formatter> for a first version.
@@ -40,7 +44,6 @@ Planned. See <https://github.com/pg-format/pg-formatter> for a first version.
 - Highlight.js
 - Prism
 - GeSHi (Generic Syntax Highlighter) used by MediaWiki
-- TextMate grammar files used by GitHub
 - Rouge used by GitLab
 - Language Server Protocol (LSP)
 
