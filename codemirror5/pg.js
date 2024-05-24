@@ -1,23 +1,24 @@
 // PG format syntax highlighting mode for CodeMirror 5
+// Implemented as Finite State Machine (could be extended to a full parser)
 //
 // reference: <https://codemirror.net/5/doc/manual.html#modeapi>
 
-const trailingSpace = /[ \t]*(?:#.*)?$/
 const reserved = "\x00-\x20<>\"{}\\^`|"
-const unquotedStart = new RegExp(`[^${reserved}:',-]`)
-const unquotedIdentifier = new RegExp(`${unquotedStart.source}[^${reserved}]*`)
-const unquotedProperty = new RegExp(`${unquotedStart.source}[^${reserved}:,]*:`)
-const escapeSequence = /\\(?:["'\/bfnrt]|u[0-9a-fA-f]{4})/
+const unquoteStart = `[^${reserved}:',-]`
 
-const TOKEN = {
-  number: /-?(?:0|[1-9][0-9]*(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?)/,
-  boolean: /true|false/,
-  emptyLine: /^[ \t]*(?:#.*)?$/,
-  trailingSpace: /[ \t]*(?:#.*)?$/,
-  unquotedValue: new RegExp(`${unquotedStart.source}[^${reserved},]*`),
-  spaces: /[ \t]+/,
-  direction: /->|--/
-}
+// language tokens
+const NUMBER = /-?(?:0|[1-9][0-9]*(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?)/
+const BOOLEAN = /true|false/
+const COLON = ":"
+const COMMA = ","
+const EMPTY_LINE = /^[ \t]*(?:#.*)?$/
+const TRAILING_SPACE = /[ \t]*(?:#.*)?$/
+const UNQUOTED_VALUE = new RegExp(`${unquoteStart}[^${reserved},]*`)
+const UNQUOTED_ID = new RegExp(`${unquoteStart}[^${reserved}]*`)
+const UNQUOTED_PROPERTY = new RegExp(`${unquoteStart}[^${reserved}:,]*:`)
+const SPACES = /[ \t]+/
+const DIRECTION = /->|--/
+const ESCAPED = /\\(?:["'\/bfnrt]|u[0-9a-fA-f]{4})/
 
 const tag = {
   label: "keyword",
@@ -30,40 +31,54 @@ const tag = {
   value: "string",
   comma: "punctuation",
   direction: "tag",
-  comment: "comment"
+  comment: "comment",
+  space: "space",
+}
+
+function startState() {
+  return {
+    current: "Statement",
+    next: null,
+    quoteChar: null,
+    stringType: null,
+  }
 }
 
 function token(stream, state) {
-  const error = () => { stream.next(); return "error" }
-  const lookAhead = next => {
-    state.state=next;
+  const skipState = cur => {
+    state.current = cur
     return null
   }
   const afterWhitespace = next => {
+    state.current = "Whitespace"
     state.next = next
-    state.state = "Whitespace"
   }
-  const startString = (next, nextTag) => {
-    state.quote = stream.next()
+  const startString = (stringType, next) => {
+    state.current = "String"
     state.next = next
-    state.nextTag = nextTag
-    state.state = "String"
-    return nextTag
+    state.quoteChar = stream.next()
+    state.stringType = stringType
+    return stringType
   }
-  //const matchToken = token => stream.match(TOKEN[token])
+  const error = () => {
+    stream.next()
+    return "error"
+  }
+
+  const match = token => stream.match(token)
+  const atQuotation = () => stream.peek() == "\"" || stream.peek() == "'"
 
   // console.log(state); console.log(stream.peek())
 
-  switch (state.state) {
+  switch (state.current) {
 
     case "Statement":
-      state.next = false
-      if (stream.match(TOKEN.emptyLine)) {
+      state.next = null
+      if (match(EMPTY_LINE)) {
         return tag.comment
-      } else if (stream.peek() == "\"" || stream.peek() == "'") {
-        state.next = "AfterFirstIdentifier"
-        return lookAhead("QuotedIdentifier")
-      } else if (stream.match(unquotedIdentifier)) {
+      } else if (atQuotation()) {
+        return startString(tag.identifier,"AfterFirstIdentifier")
+      } else if (match(UNQUOTED_ID)) {
         if (stream.current().endsWith(":")) {
           afterWhitespace("Source")
         } else {
@@ -71,162 +86,161 @@ function token(stream, state) {
         }
         return "identifier"
       }
-      stream.eat(/[ \t]+/) // wrong intend  
+      stream.eat(/[ \t]+/) // wrong intend 
       return error()
 
     case "AfterFirstIdentifier":
-      if (stream.match(":")) {
-        state.state = "Source"
+      if (match(COLON)) {
+        state.current = "Source"
         return "identifier"
+      } else if (match(SPACES)) {
+        state.current = "AfterNodeOrSource"
+        return tag.space
       }
+
     case "AfterNodeOrSource":
-      if (stream.sol()) { // plain node
-        return lookAhead("Statement")
-      } 
-      if (stream.match(TOKEN.direction)) {
+      if (stream.sol()) {
+        return skipState("Statement")
+      } else if (match(TRAILING_SPACE)) {
+        afterWhitespace("AfterNodeOrSource")
+      } else if (match(DIRECTION)) {
         afterWhitespace("Target")
         return tag.direction
       }
-      return lookAhead("Label")
+      return skipState("Label")
 
     case "Source":
-      if (stream.match(unquotedIdentifier)) {
+      if (match(TRAILING_SPACE)) {
+        afterWhitespace("Source")
+        return tag.comment
+      } else if (match(UNQUOTED_ID)) {
         afterWhitespace("Direction")
         return "identifier"
-      } else if (stream.peek() == "\"" || stream.peek() == "'") {
-        state.next = "Direction"
-        return lookAhead("QuotedIdentifier")
+      } else if (atQuotation()) {
+        return startString(tag.identifier,"Direction")
       }
-      // TODO: whitespace
       return error() 
 
-    case "Direction": // afterSource
-      // TODO: whitespace
-      if (stream.match(TOKEN.direction)) {
+    case "Direction":
+      if (match(DIRECTION)) {
         afterWhitespace("Target")
         return tag.direction
       }
       return error() 
 
-    case "QuotedIdentifier":
-      state.quote = stream.next()
-      stream.match(new RegExp("[^\\\\"+state.quote+"]+"))
-      state.state = "String"
-      state.nextTag = tag.identifier
-      return tag.identifier
-
     case "Target":
-      if (stream.match(unquotedIdentifier)) {
+      if (match(UNQUOTED_ID)) {
         afterWhitespace("Label")
         return tag.target
-      } else if (stream.peek() == "\"" || stream.peek() == "'") {
-        state.next = "Label"
-        return lookAhead("QuotedIdentifier")
+      } else if (atQuotation()) {
+        return startString(tag.identifier,"Label")
       }
       return error()
           
     case "Label":
-      if (stream.match(trailingSpace)) { // trailing comment or ignored line
+      if (stream.match(/^[ \t]+/)) {
+        return tag.space
+      } else if (stream.sol()) {          
+        return skipState("Statement")
+      } else if (match(TRAILING_SPACE)) {
         afterWhitespace("Label")
         return tag.comment
       } else if (stream.match(/:[ \t]*/)) { // label
-        if (stream.match(unquotedIdentifier)) {
+        if (match(UNQUOTED_ID)) {
           afterWhitespace("Label")
-        } else if (stream.peek() == "\"" || stream.peek() == "'") {
-          return startString("Label",tag.label)
+        } else if (atQuotation()) {
+          return startString(tag.identifier,"Label")
         } else {
           return error() 
         }
         return tag.label
-      } else if (stream.peek() == "\"" || stream.peek() == "'") {
-        return startString("Property",tag.property)
-        return tag.property
-      } else if (stream.match(unquotedProperty)) {
+      } else if (atQuotation()) {
+        return startString(tag.property,"Property")
+      } else if (match(UNQUOTED_PROPERTY)) {
         if (stream.eol() || stream.match(/[ \t]+/,false)) {
           afterWhitespace("Value")
         } else {
-          state.state = "Value"
+          state.current = "Value"
         }
         return tag.property
       }
       return error()
 
     case "Property":
-      if (stream.match(":")) {
-        state.state = "Value"
+      if (match(COLON)) {
+        state.current = "Value"
         return tag.property
       } else {
         return error()
       }
 
     case "AfterValue":
-      if (stream.match(trailingSpace)) {
+      if (match(TRAILING_SPACE)) {
         afterWhitespace("AfterValue")
         return tag.comment
       } else if (stream.sol()) {
         if (stream.match(/[ \t]+,/)) {
-          state.state = "Value"
+          state.current = "Value"
           return tag.comma
         }
-        return lookAhead("Statement")
+        return skipState("Statement")
       }
-      if (stream.match(/[ \t]+/)) {
-        return "space"
-      } else if (stream.match(",")) {
-        state.state = "Value"
+      if (match(SPACES)) {
+        return tag.space
+      } else if (match(COMMA)) {
+        state.current = "Value"
         return tag.comma
-      } else if (stream.peek() == "\"" || stream.peek() == "'") {
-        return startString("Property",tag.property)
-      } else if (stream.match(unquotedProperty)) {
-        if (stream.eol() || stream.match(/[ \t]+/,false)) {
+      } else if (atQuotation()) {
+        return startString(tag.property,"Property")
+      } else if (match(UNQUOTED_PROPERTY)) {
+        if (stream.eol() || stream.match(SPACES,false)) {
           afterWhitespace("Value")
         } else {
-          state.state = "Value"
+          state.current = "Value"
         }
         return tag.property
       }
       return error()
 
     case "Value":
-      if (stream.match(trailingSpace)) {
+      if (match(TRAILING_SPACE)) {
         afterWhitespace("Value")
         return tag.comment
       } else if (stream.sol()) {
         return error()
-      } else if (stream.match(TOKEN.boolean)) {
-        state.state = "AfterValue"
+      } else if (match(BOOLEAN)) {
+        state.current = "AfterValue"
         return tag.boolean
-      } else if (stream.match(TOKEN.number)) {
-        state.state = "AfterValue"
+      } else if (match(NUMBER)) {
+        state.current = "AfterValue"
         return tag.number
-      } else if (stream.match(TOKEN.unquotedValue)) {
-        state.state = "AfterValue"
+      } else if (match(UNQUOTED_VALUE)) {
+        state.current = "AfterValue"
         return tag.value
-      } else if (stream.peek() == "\"" || stream.peek() == "'") {
-        return startString("AfterValue",tag.value)
+      } else if (atQuotation()) {
+        return startString(tag.value,"AfterValue")
       }
       return error()
 
     case "Whitespace":
-      if (stream.match(trailingSpace)) {
+      if (match(TRAILING_SPACE)) {
         return tag.comment
-      } else if (stream.match(TOKEN.spaces)) {
+      } else if (match(SPACES)) {
         // required space or continuation line
         if (state.next) {
-          state.state = state.next
+          state.current = state.next
           state.next = false
-          return "space"  
+          return tag.space
         } else {
           return error()
         }
       } else if (stream.sol()) {
-        return lookAhead("Statement")
+        return skipState("Statement")
       }
       return error()
 
     case "String":
-      const type = state.nextTag || "string"
-      if (stream.match(escapeSequence)) {
+      if (match(ESCAPED)) {
         return tag.escape
       } else if (stream.match(/\\.?/)) {
         return "error"
@@ -236,14 +250,14 @@ function token(stream, state) {
       while ((next = stream.peek()) != null) {
         if (next == "\\") break
         stream.next()
-        if (next == state.quote) {
-          state.quote = null
-          state.state = state.next
+        if (next == state.quoteChar) {
+          state.quoteChar = null
+          state.current = state.next
           state.next = null
           break
         }
       }
-      return type
+      return state.stringType
    
     default:
       return error()
@@ -252,7 +266,7 @@ function token(stream, state) {
 
 CodeMirror.defineMode("pg", () => {
   return {
-    startState() { return { state: "Statement" } },
+    startState,
     lineComment: "#",
     token,
   }

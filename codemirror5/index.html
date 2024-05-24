@@ -14,7 +14,6 @@
   <script>
   fetch("pg-format.pg").then(res => res.text())
       .then(pg => {
-        //pg = ` a` 
         const element = document.getElementById("output") 
         CodeMirror(element, { value: pg, mode: "pg" })
         //CodeMirror.runMode(pg,"pg",element)
