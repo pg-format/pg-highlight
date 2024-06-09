@@ -22,15 +22,7 @@ The Kate Syntax Highlighting Engine ([KSyntaxHighlighting](https://invent.kde.or
 written in C++ is used by Kate, KDevelop, and other KDE applications. Its syntax definition file format is also
 used by the [skylighting](https://github.com/jgm/skylighting) engine written in Hasekll and used by Pandoc and Quarto.
 
-Directory [kate](kate) contains:
-
-- PG format syntax definition file [kate/pg.xml](pg.xml)
-- Makefile to validate and test syntax definition (requires `xmllint`)
-- Unit test file `pg-format.pg`
-- `test.sh` Script to run unit tests with [skylighting](https://github.com/jgm/skylighting) 
-- `skylight` Script to highlight with [skylighting](https://github.com/jgm/skylighting) 
-- `highlight` Script to highlight with [kate-syntax-highlighting](https://github.com/KDE/syntax-highlighting)
-  Use option `--syntax-trace` with `katelight` to display additional information, e.g.
+See [kate/README.md](kate/README.md) for technical details.
 
 ### CodeMirror 5
 
