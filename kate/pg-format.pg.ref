@@ -36,6 +36,9 @@
 <Identifier>a</Identifier><Space> </Space><PropertyKey>b:</PropertyKey><Space> </Space><UnquotedValue>c:d</UnquotedValue><br/>
 <Identifier>a</Identifier><Space> </Space><PropertyKey>b:c:</PropertyKey><Space> </Space><UnquotedValue>d</UnquotedValue><br/>
 <Error></Error><br/>
+<Identifier>a</Identifier><Space> </Space><PropertyKey>b:</PropertyKey><Number>1</Number><br/>
+<Space>  </Space><PropertyKey>c:</PropertyKey><Number>2</Number><br/>
+<Error></Error><br/>
 <Comment># Edges</Comment><br/>
 <Identifier>a</Identifier><Space> </Space><Direction>-></Direction><Space> </Space><Identifier>b</Identifier><br/>
 <Identifier>a</Identifier><Space> </Space><Direction>--</Direction><Space> </Space><Identifier>b</Identifier><Space> </Space><PropertyKey>key:</PropertyKey><UnquotedValue>value</UnquotedValue><br/>

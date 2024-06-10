@@ -37,15 +37,6 @@ const tag = {
   space: "space",
 }
 
-function startState() {
-  return {
-    current: "Statement",
-    next: null,
-    quoteChar: null,
-    stringType: null,
-  }
-}
-
 function token(stream, state) {
   const skipState = cur => {
     state.current = cur
@@ -88,7 +79,7 @@ function token(stream, state) {
     return error()
   }
 
-  //console.log(state); console.log(stream.peek())
+  // console.log(state); console.log(stream.peek())
 
   switch (state.current) {
 
@@ -188,11 +179,7 @@ function token(stream, state) {
       if (match(TRAILING_SPACE)) {
         afterWhitespace("AfterValue")
         return tag.comment
-      } else if (stream.sol()) {
-        if (match(/[ \t]+,/)) {
-          state.current = "Value"
-          return tag.comma
-        }
+      } else if (stream.sol() && match(/[^ \t]/,false)) {
         return skipState("Statement")
       } else if (match(SPACES)) {
         return tag.space
@@ -266,7 +253,12 @@ function token(stream, state) {
 
 CodeMirror.defineMode("pg", () => {
   return {
-    startState,
+    startState: () => ({
+      current: "Statement",
+      next: null,
+      quoteChar: null,
+      stringType: null,
+    }),
     lineComment: "#",
     token,
   }
